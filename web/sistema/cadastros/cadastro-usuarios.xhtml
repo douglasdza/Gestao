@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+<!--                <h:outputLink value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+                    <h:outputText value="Sair"/>
+                </h:outputLink>-->
+                    <center><h3>Cadastrar usuários</h3></center>
+                    <p>
+                        Você deve cadastrar login e senha para usuários terem acesso ao sistema Gestão de Eventos.
+                        <br/>
+                        <br/>
+                        Níveis de Acesso: ADMINISTRADOR, ORGANIZADOR, AVALIADOR E COMUM (letra maiúscula).
+                    </p>
+               
+                <h:form id="formFormularioUsuario">
+                    <h:panelGrid columns="1" >
+                        <p:outputLabel for="erroNome" value="Nome"/>
+                        <p:inputText id="erroNome"
+                                     value="#{usuarioMB.usuario.nome}"
+                                     validator="validarNome"
+                                     required="true"
+                                     requiredMessage="Nome obrigatório"
+                                     style="width:300px"/>
+                        
+                       <p:outputLabel for="erroEmail" value="Email"/>
+                        <p:inputText id="erroEmail"
+                                     value="#{usuarioMB.usuario.email}"
+                                     validator="validarEmail"
+                                     required="true"
+                                     requiredMessage="Email obrigatório"
+                                     style="width:300px"/>
+                        
+                        <p:outputLabel for="erroSenha" value="Senha"/>
+                        <p:inputText id="erroSenha"
+                                     value="#{usuarioMB.usuario.senha}"
+                                     required="true"
+                                     requiredMessage="Senha obrigatório"
+                                     style="width:300px"/>
+                        
+                        <p:outputLabel for="erroPerfil" value="Nível de Acesso"/>
+                        <p:inputText id="erroPerfil"
+                                     value="#{usuarioMB.usuario.perfil}" 
+                                     validator="validarPerfil"
+                                     required="true"
+                                     requiredMessage="Nível de Acesso obrigatório"
+                                     style="width:300px"/> 
+                                                                       
+                        <p:commandButton value="INSERIR USUÁRIO" 
+                                         actionListener="#{usuarioMB.inserir()}"                                             
+                                         update=":formTabelaUsuario, @form"
+                                         styleClass="ui-priority-primary"
+                                         style="width:300px"/>
+                <p:message for="erroNome"/>
+                <p:message for="erroEmail"/>
+                <p:message for="erroSenha"/>
+                <p:message for="erroPerfil"/>
+                
+                </h:panelGrid>
+                </h:form>
+                <br/>
+                <p>
+                    <font style="font-weight: bold">Tabela de funcionários cadastrados com nível de acesso definido</font>
+                </p>
+                <h:form id="formTabelaUsuario">
+                    <p:dataTable value="#{usuarioMB.listaUsuarios}" var="usuario">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{usuario.nome}"/>
+                        </p:column>
+                        <p:column headerText="Perfil">
+                            <h:outputText value="#{usuario.perfil}"/>
+                        </p:column>
+
+                        <p:column headerText="Ação">                             
+                            <p:commandButton value="Excluir"
+                                             update="@form" 
+                                             actionListener="#{usuarioMB.remover(usuario.id)}"
+                                             styleClass="ui-priority-primary"
+                                             style="width:300px">
+                                <p:confirm header="Confirmação" 
+                                           message="Deseja excluir?" 
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+               </h:form>
+                    <br/>
+                    <br/>
+                <p>
+                    <font style="font-weight: bold">Tabela de alunos/participante
+                        cadastrados com nível de acesso definido</font>
+                </p>
+                    <h:form id="formTabelaAluno">
+                        <p:dataTable value="#{alunoMB.listaAlunos}" var="aluno">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{aluno.nomeCompleto}"/>
+                        </p:column>
+                        <p:column headerText="Nível de Acesso:">
+                            <h:outputText value="#{aluno.usuario.perfil}"/>
+                        </p:column>
+
+                        <p:column headerText="Ação">                             
+                            <p:commandButton value="Excluir"
+                                             update="@form" 
+                                             actionListener="#{usuarioMB.remover(usuario.id)}"
+                                             styleClass="ui-priority-primary"
+                                             style="width:300px">
+                                <p:confirm header="Confirmação" 
+                                           message="Deseja excluir?" 
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                        <br/>
+                        <br/>
+                        <br/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

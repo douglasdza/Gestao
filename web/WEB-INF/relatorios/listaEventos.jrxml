@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaEventos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a23f2441-c433-4c65-8b8c-690fc27c2ccc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="EVENTO" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT evento.id,
+	evento.datafim,
+	evento.datainicio,
+	evento.nomeevento,
+	evento.descricaoevento,
+	curso.nomecurso,
+	participante.nomeparticipante,
+	evento.datainscricao
+FROM evento
+	INNER JOIN participante ON 
+	 evento.participante_id = participante.id 
+	INNER JOIN curso ON 
+	 evento.curso_id = curso.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="datafim" class="java.sql.Date"/>
+	<field name="datainicio" class="java.sql.Date"/>
+	<field name="nomeevento" class="java.lang.String"/>
+	<field name="descricaoevento" class="java.lang.String"/>
+	<field name="nomecurso" class="java.lang.String"/>
+	<field name="nomeparticipante" class="java.lang.String"/>
+	<field name="datainscricao" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="70" width="545" height="30" forecolor="#10A5C7" uuid="8498f60c-12b3-40b8-96a4-fdbb3dd0648a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Eventos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="10" width="240" height="34" forecolor="#10A5C7" uuid="ef9289f4-c367-443e-a42a-53926dc808f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="19" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Gestão de Eventos]]></text>
+			</staticText>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="410" y="4" width="135" height="30" uuid="72d2e4c1-a85e-4a4a-a613-978347a84611"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="5" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="20" width="100" height="40" backcolor="#FFFFFF" uuid="5fc47594-4795-4444-bd28-42b64df10b3f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Evento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="20" width="100" height="40" backcolor="#FFFFFF" uuid="eda8149a-efeb-48ce-8424-c11b74f5163c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Palestrante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="20" width="100" height="40" backcolor="#FFFFFF" uuid="f0d6ccf8-8899-4672-98b6-7d4337559f97"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Descrição do evento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="20" width="100" height="40" backcolor="#FFFFFF" uuid="2c987d7a-4f7a-4481-bf0d-0995927f1e96"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Data do evento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="400" y="20" width="145" height="40" backcolor="#FFFFFF" uuid="4d38bfe1-733c-4b88-8766-2541adf6e6ef"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Data das inscrições:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="844533d6-4a64-4a20-bdc3-7e6358f155f1"/>
+				<textFieldExpression><![CDATA[$F{nomeevento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="30" uuid="a2ada0f0-45e4-444b-9a34-aa38c783e16e"/>
+				<textFieldExpression><![CDATA[$F{nomeparticipante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="30" uuid="1a33d59f-474a-471d-8a76-934387a88e14"/>
+				<textFieldExpression><![CDATA[$F{descricaoevento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="30" uuid="5bd66f5e-4c27-4d8a-85db-918a80cf92c1"/>
+				<textFieldExpression><![CDATA[$F{datainicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="144" height="30" uuid="344a0e9d-b24b-4095-88db-68b13acbf80b"/>
+				<textFieldExpression><![CDATA[$F{datainscricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="370" y="12" width="100" height="30" uuid="1d259a04-c76f-4aa5-bdfc-eddba192a4e1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="470" y="12" width="100" height="30" uuid="b4c03ab7-0dd3-46ef-8f52-4db6e7e9366f"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <center><h3>Cadastro de Cursos</h3></center>
+                <p>
+                    Você deve cadastrar cursos disponíveis (de Ensino Superior
+                    e de Ensino Médio Integral e Profissional)
+                    que o Instituto Federal do Paraná oferta
+                    para os estudantes.
+                </p>
+                <h:form id="formBotaoNovoCurso">
+                    <p:commandButton value="CADASTRAR CURSO"
+                                     update=":formFormularioCurso"
+                                     oncomplete="PF('dialogCurso').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaCurso">
+                    <p:dataTable value="#{cursoMB.listaCursos}" 
+                                 var="curso">
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{curso.nomeCurso}"/>
+                        </p:column>   
+
+                        <p:column headerText="Coordenador">
+                            <h:outputText value="#{curso.coordenador}"/>
+                        </p:column>  
+
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar" 
+                                             oncomplete="PF('dialogCurso').show()" 
+                                             update=":formFormularioCurso"
+                                             styleClass="ui-priority-primary">
+                                <f:setPropertyActionListener value="#{curso}" 
+                                                             target="#{cursoMB.curso}"/>
+                            </p:commandButton>  
+                            
+                            <p:commandButton value="Excluir" 
+                                             update="@form" 
+                                             actionListener="#{cursoMB.remover(curso.id)}"
+                                             styleClass="ui-priority-primary">
+                                <p:confirm header="Confirmação"
+                                           message="Tem certeza de excluir o Curso?"
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+                            
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true"
+                                     showEffect="fade"
+                                     hideEffect="fade">
+                        
+                        <p:commandButton value="Sim"
+                                         type="button"
+                                         styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check" />
+                        
+                        <p:commandButton value="Não"
+                                         type="button"
+                                         styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+
+                <p:dialog header="Cadastro de Curso" 
+                          widgetVar="dialogCurso" modal="true" height="auto">
+                    <h:form id="formFormularioCurso">
+                        <h:panelGrid columns="1">
+
+                            <h:outputLabel for="erroCursos" value="Nome de Curso:"/>
+                            <p:inputText id="erroCursos"
+                                         value="#{cursoMB.curso.nomeCurso}"
+                                         required="true"
+                                         requiredMessage="Nome de curso obrigatório!"/>
+
+                            <h:outputLabel for="erroCoordenador" value="Coordenador:"/>
+                            <p:inputText id="erroCoordenador"
+                                         value="#{cursoMB.curso.coordenador}"
+                                         required="true"
+                                         requiredMessage="Nome de coordenador obrigatório!"/>
+
+                            <p:commandButton value="Inserir curso" 
+                                             actionListener="#{cursoMB.inserir()}"
+                                             oncomplete="validarCurso(xhr, status, args)"
+                                             update=":formTabelaCurso,@form"
+                                             styleClass="ui-priority-primary"/>
+
+                            <p:message for="erroCursos"/>
+                            <p:message for="erroCoordenador"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog> 
+
+                <script>
+                    function validarCurso(xhr, status, args) {
+                        if (!args.validationFailed) {
+                            PF('dialogCurso').hide();
+                        }
+                    }
+                </script>                
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

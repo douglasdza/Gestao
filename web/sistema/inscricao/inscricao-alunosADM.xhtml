@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <center><h3>Gerenciar inscrições</h3></center>
+                
+                <h:form id="formTabelaInscricao">
+                <p:dataTable value="#{alunoMB.listaAlunos}"
+                             var="aluno">
+
+                    <p:column headerText="Nome completo">
+                        <h:outputText value="#{aluno.nomeCompleto}"/>
+                    </p:column>
+
+                    <p:column headerText="Data de Nascimento">
+                        <h:outputText value="#{aluno.dataNascimento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Cidade de residência">
+                        <h:outputText value="#{aluno.cidade.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{aluno.estado.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="CPF">
+                        <h:outputText value="#{aluno.cpf}"/>
+                    </p:column>
+
+                    <p:column headerText="Telefone">
+                        <h:outputText value="#{aluno.telefone}"/>
+                    </p:column>
+
+                    <p:column headerText="E-mail">
+                        <h:outputText value="#{aluno.email}"/>
+                    </p:column>
+
+                    <p:column headerText="Registro Acadêmico (RA)">
+                        <h:outputText value="#{aluno.registroAcademico}"/>
+                    </p:column>
+
+                    <p:column headerText="Ações">
+<!--                        <p:commandButton value="Alterar"
+                                         oncomplete="PF('dialogInscricao').show()"
+                                         update="formTabelaInscricao"
+                                         styleClass="ui-priority-primary">
+                            <f:setPropertyActionListener value="#{aluno}" 
+                                                         target="#{alunoMB.aluno}"/>
+                        </p:commandButton>-->
+                        <p:commandButton value="Excluir" 
+                                         update="@form" 
+                                         actionListener="#{alunoMB.remover(aluno.id)}"
+                                         styleClass="ui-priority-primary">
+                            <p:confirm header="Confirmação" message="Deseja excluir esta inscrição?" icon="ui-icon-alert" />
+                        </p:commandButton>                    
+                    </p:column>
+                </p:dataTable>                                         
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,400 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Cadastro de Eventos</title>
+    </h:head>
+    <a href="cadastro-palestrantes2.xhtml"></a>
+
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+            <p:growl autoUpdate="true"/>
+            <ui:define name="content">
+
+                <center><h3>Cadastro de Eventos</h3></center>
+                <p>
+                    Você deve cadastrar eventos que foram e serão realizadas
+                    aqui no Instituto Federal do Paraná.
+                </p>
+
+                <h:form id="formBotaoNovoEvento">
+                    <p:commandButton value="CADASTRAR EVENTO"
+                                     update=":formFormularioEvento"
+                                     oncomplete="PF('dialogEvento').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaEvento">
+                    <p:dataTable value="#{eventoMB.listaEventos}" var="evento">
+
+                        <p:column headerText="Nome de Evento">
+                            <h:outputText value="#{evento.nomeEvento}"/>
+                        </p:column>
+
+                        <p:column headerText="Descrição de Evento">
+                            <h:outputText value="#{evento.descricaoEvento}"/>
+                        </p:column>
+
+                        <p:column headerText="Palestrante">
+                            <h:outputText value="#{evento.participante.nomeParticipante}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de Início de Evento">
+                            <h:outputText value="#{evento.dataInicio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Data de Término de Evento">
+                            <h:outputText value="#{evento.dataFim}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Data de Início das Inscrições">
+                            <h:outputText value="#{evento.dataInscricao}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Data de Término das Inscrições">
+                            <h:outputText value="#{evento.dataInscricaoFim}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>                        
+
+                        <p:column headerText="Local de Evento">
+                            <h:outputText value="#{evento.localEvento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Curso">
+                            <h:outputText value="#{evento.curso.nomeCurso}"/>
+                        </p:column>
+
+                        <p:column headerText="Carga Horária">
+                            <h:outputText value="#{evento.cargaHoraria}"/>
+                        </p:column>
+
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar" 
+                                             oncomplete="PF('dialogEvento').show()" 
+                                             update=":formFormularioEvento" 
+                                             styleClass="ui-priority-primary">
+                                <f:setPropertyActionListener value="#{evento}" 
+                                                             target="#{eventoMB.evento}"/>
+                            </p:commandButton>
+                            <!--                            <br/><br/>-->
+                            <p:commandButton value="Excluir" 
+                                             update="@form" 
+                                             actionListener="#{eventoMB.remover(evento.id)}"
+                                             styleClass="ui-priority-primary">
+                                <p:confirm header="Confirmação" message="Deseja excluir o Evento?" icon="ui-icon-alert" />
+                            </p:commandButton>                    
+                        </p:column>                        
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                </h:form>                 
+
+                <!--DIALOG DO EVENTO-->
+
+                <p:dialog header="Cadastrar Eventos" 
+                          widgetVar="dialogEvento" 
+                          modal="true" 
+                          height="500">
+
+                    <h:form id="formFormularioEvento">
+                        <h:panelGrid columns="1">
+
+                            <h:outputLabel value="Nome de Evento: "
+                                           style="font-weight: bold"/>
+                            <p:inputText id="erroEvento"
+                                         value="#{eventoMB.evento.nomeEvento}"
+                                         required="true"
+                                         requiredMessage="Evento obrigatório!"
+                                         style="width:300px"/>
+
+                            <h:outputLabel value="Descrição de Evento: "
+                                           style="font-weight: bold; display: block;"
+                                           escape="false"/> 
+
+                            <p:inputTextarea id="erroDescricaoEventos"
+                                             rows="5" 
+                                             cols="30" 
+                                             counter="displayDescricaoEvento"
+                                             maxlength="300" 
+                                             counterTemplate="{0} caracteres restantes." 
+                                             autoResize="false"                                             
+                                             value="#{eventoMB.evento.descricaoEvento}"
+                                             required="true"
+                                             requiredMessage="Resumo de artigo obrigatório!"
+                                             style="width:300px"/>
+                            <div align="left"><h:outputText id="displayDescricaoEvento" /></div>
+
+                            <h:outputText value="Palestrante: "
+                                          style="font-weight: bold"/>
+                            <p:selectOneMenu converter="converterPalestrante" 
+                                             value="#{eventoMB.evento.participante}"
+                                             style="width:280px">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{participanteMB.listaParticipantes}" 
+                                               var="participante" itemLabel="#{participante.nomeParticipante}"
+                                               itemValue="#{participante}"
+                                               />
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Data de Início de Evento: "
+                                           style="width:300px; font-weight: bold"/>
+                            <p:calendar id="erroInicioEvento"
+                                        pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        value="#{eventoMB.evento.dataInicio}"
+                                        required="true"
+                                        requiredMessage="Obrigatório incluir data de início de evento"/>
+
+                            <h:outputLabel value="Data de Término do Evento: "
+                                           style="font-weight: bold"/>
+                            <p:calendar id="erroTerminoEvento" 
+                                        pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        value="#{eventoMB.evento.dataFim}"
+                                        required="true"
+                                        requiredMessage="Obrigatório incluir data de término de evento"/>
+
+                            <h:outputLabel value="Data de Início das Incrições: "
+                                           style="font-weight: bold"/>
+                            <p:calendar id="erroInicioInscricoes"
+                                        pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        value="#{eventoMB.evento.dataInscricao}"
+                                        required="true"
+                                        requiredMessage="Obrigatório incluir data de iníncio das incrições"/>
+
+                            <h:outputText value="Data de Término das Incrições: "
+                                          style="font-weight: bold"/>
+                            <p:calendar pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        value="#{eventoMB.evento.dataInscricaoFim}"/>
+
+                            <h:outputText value="Local de Evento"
+                                          style="font-weight: bold"/>
+                            <p:inputText value="#{eventoMB.evento.localEvento}"
+                                         style="width:300px"/>
+
+                            <h:outputText value="Curso: "
+                                          style="font-weight: bold"/>
+                            <p:selectOneMenu id="erroSelecionarCurso"
+                                             converter="converterCurso" 
+                                             value="#{eventoMB.evento.curso}" 
+                                             required="true"
+                                             requiredMessage="Obrigatório selecionar curso!"
+                                             style="width:280px">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{cursoMB.listaCursos}" 
+                                               var="curso" itemLabel="#{curso.nomeCurso}"
+                                               itemValue="#{curso}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Carga Horária:"
+                                          style="font-weight: bold"/>
+                            <p:inputText id="erroCHEvento"
+                                         value="#{eventoMB.evento.cargaHoraria}"
+                                         required="true"
+                                         requiredMessage="Obigatório carga horária!"
+                                         style="width:300px"/>
+
+                            <p:commandButton value="Inserir evento" 
+                                             actionListener="#{eventoMB.inserir()}"
+                                             oncomplete="validarFormulario(xhr, status, args)"
+                                             update=":formTabelaEvento,@form"
+                                             style="width:310px; font-weight: bold"
+                                             styleClass="ui-priority-primary"/>
+
+                            <!--Erros para o cadastro de eventos-->
+                            <p:message for="erroEvento"/>
+                            <p:message for="erroDescricaoEventos"/>
+                            <p:message for="erroInicioEvento"/>
+                            <p:message for="erroTerminoEvento"/>
+                            <p:message for="erroInicioInscricoes"/>
+                            <p:message for="erroSelecionarCurso"/>
+                            <p:message for="erroCHEvento"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+                <br/>
+                <hr/>
+
+                <!-- AQUI COMEÇA OUTRA TELA DE CADASTRO - SUBEVENTOS E MINICURSOS -->
+                <p>Você deve cadastrar os subeventos que podem ser palestras e 
+                    minicursos que façam parte do evento, por exemplo.
+                </p>
+                <br/>
+
+                <h:form id="formBotaoNovoSubEvento">
+                    <p:commandButton value="CADASTRAR SUBEVENTO"
+                                     update=":formFormularioSubEvento"
+                                     oncomplete="PF('dialogSubEvento').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaSubEvento">
+                    <p:dataTable value="#{subEventoMB.listaSubEventos}" var="subevento">
+
+                        <p:column headerText="Nome de Evento">
+                            <h:outputText value="#{subevento.evento.nomeEvento}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome de Subevento">
+                            <h:outputText value="#{subevento.nomeSubEvento}"/>
+                        </p:column>
+
+
+                        <p:column headerText="Data do Subevento">
+                            <h:outputText value="#{subevento.dataSubEvento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Palestrante/Participante">
+                            <h:outputText value="#{subevento.participante.nomeParticipante}"/>
+                        </p:column>
+
+                        <p:column headerText="Carga Horária">
+                            <h:outputText value="#{subevento.cargaHoraria}"/>
+                        </p:column>
+
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar" 
+                                             oncomplete="PF('dialogSubEvento').show()"
+                                             update=":formFormularioSubEvento" 
+                                             styleClass="ui-priority-primary">
+                                <f:setPropertyActionListener value="#{subevento}" 
+                                                             target="#{subEventoMB.subevento}"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="Excluir" 
+                                             update="@form" 
+                                             actionListener="#{subEventoMB.remover(subevento.id)}"
+                                             styleClass="ui-priority-primary">
+                                <p:confirm header="Confirmação" 
+                                           message="Deseja excluir o Subevento?" 
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>                    
+                        </p:column>                        
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                </h:form>                 
+
+                <!--DIALOG DO SUBEVENTO-->
+
+                <p:dialog header="Cadastro de Subeventos" 
+                          widgetVar="dialogSubEvento" 
+                          modal="true" 
+                          height="auto">
+                    <h:form id="formFormularioSubEvento">
+                        <h:panelGrid columns="1">
+
+                            <!-- Criar aqui um dropdown que pega nome de evento já cadastrado -->
+                            <h:outputText value="Evento: "/>
+                            <p:selectOneMenu converter="converterEvento" 
+                                             value="#{subEventoMB.subevento.evento}" >
+                                <f:selectItems value="#{eventoMB.listaEventos}" 
+                                               var="evento" itemLabel="#{evento.nomeEvento}"
+                                               itemValue="#{evento}"/>
+                            </p:selectOneMenu>
+
+                            <!--<h:outputText value="Nome de Evento: "/>
+                                    <p:inputText id="erroSubEvento"
+                                        value="#{eventoMB.evento.nomeEvento}"
+                                        required="true"
+                                        requiredMessage="Nome de subevento obrigatório!"/>
+                                    <p:message for="erroSubEvento"/>-->
+
+                            <h:outputText value="Nome de Subevento: "/>
+                            <p:inputText id="erroSubEvento"
+                                         value="#{subEventoMB.subevento.nomeSubEvento}"
+                                         required="true"
+                                         requiredMessage="Nome de subevento obrigatório!"/>
+
+                            <h:outputText value="Data do Subevento: "/>
+                            <p:calendar pattern="dd/MM/yyyy" 
+                                        mask="true"
+                                        value="#{subEventoMB.subevento.dataSubEvento}"/>
+
+                            <h:outputText value="Palestrante: "/>
+                            <p:selectOneMenu converter="converterPalestrante" 
+                                             value="#{subEventoMB.subevento.participante}" >
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{participanteMB.listaParticipantes}" 
+                                               var="participante" itemLabel="#{participante.nomeParticipante}"
+                                               itemValue="#{participante}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Carga Horária: "/>
+                            <p:inputText id="erroCHSubEvento"
+                                         value="#{subEventoMB.subevento.cargaHoraria}"
+                                         required="true"
+                                         requiredMessage="Obrigatório carga horária!"/>
+
+                            <p:commandButton value="Inserir subevento" 
+                                             actionListener="#{subEventoMB.inserir()}"
+                                             oncomplete="validarFormulario2(xhr, status, args)"
+                                             update=":formTabelaSubEvento,@form"
+                                             styleClass="ui-priority-primary"/>
+
+                            <p:message for="erroSubEvento"/>
+                            <p:message for="erroCHSubEvento"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+                <br />
+                <br />
+                <h:form>
+                    <p:commandButton value="GERAR LISTA DE EVENTOS"
+                                     actionListener="#{eventoMB.chamarRelatorioConexao()}" 
+                                     ajax="false"
+                                     styleClass="ui-priority-primary"/>
+                </h:form>
+
+                <!--Esse código abaixo serve para o dialog não fechar, com campos obrigatórios (required)-->                
+                <script>
+                    function validarFormulario(xhr, status, args) {
+                        if (!args.validationFailed) {
+                            PF('dialogEvento').hide();
+                        }
+                    }
+                </script>
+
+                <!--Se houver outro dialog, o script será igual exceto o nome de função e a variável de PF-->
+                <script>
+                    function validarFormulario2(xhr, status, args) {
+                        if (!args.validationFailed) {
+                            PF('dialogSubEvento').hide();
+                        }
+                    }
+                </script>
+
+            </ui:define>    
+        </ui:composition>
+    </h:body>
+</html>

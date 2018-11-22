@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gerenciamento de Eventos</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+
+                <center><h3>Página oculta - para cadastrar atributos para botão
+                        de Avaliar Artigo</h3></center>
+                <br/>
+
+                <h:form id="formBotaoParecerFinalOculto">
+                    <p:commandButton value="CADASTRAR PARECER"
+                                     update=":formFormularioParecerFinalOculto"
+                                     oncomplete="PF('dialogParecerOculto').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaArtigoSubmetido">
+
+                    <p:dataTable value="#{artigoSubmetidoMB.listaArtigoSubmetido}"
+                                 var="artigoSubmetido">
+
+                        <p:column headerText="Parecer">
+                            <h:outputText value="#{artigoSubmetido.artigoSubmetidoAvaliado}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:dialog header="Parecer Final" 
+                          widgetVar="dialogParecerOculto" 
+                          modal="true"
+                          height="auto">
+
+                    <h:form id="formFormularioParecerFinalOculto">
+                        <h:panelGrid columns="1">
+                            <h:outputText value="Parecer: "
+                                          style="font-weight: bold"/>
+
+                            <p:inputText value="#{artigoSubmetidoMB.artigoSubmetido.artigoSubmetidoAvaliado}"
+                                         style="width:300px"/>
+
+                            <p:commandButton value="INSERIR ATRIBUTOS" 
+                                             actionListener="#{artigoSubmetidoMB.inserir()}"
+                                             oncomplete="validarParecerOculto(xhr, status, args)"
+                                             update=":formTabelaArtigoSubmetido,@form"
+                                             style="width:310px; font-weight: bold"
+                                             styleClass="ui-priority-primary"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+            <script>
+                function validarParecerOculto(xhr, status, args) {
+                    if (!args.validationFailed) {
+                        PF('dialogParecerOculto').hide();
+                    }
+                }
+            </script>
+
+        </ui:composition>
+
+    </h:body>
+</html>
+

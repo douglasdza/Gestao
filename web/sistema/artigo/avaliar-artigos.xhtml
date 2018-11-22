@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gerenciamento de Eventos</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+
+                <center><h3>Controle de artigos submetidos</h3></center>
+                <br/>
+
+                <h:form id="formTabelaArtigoSubmetido">
+
+                    <p:dataTable value="#{submeterArtigoMB.listaArtigos}"
+                                 var="artigoSubmetido">
+
+                    <p:column headerText="Autor">
+                        <h:outputText value="#{artigoSubmetido.autor}"/>
+                    </p:column>
+
+                    <p:column headerText="Título do artigo">
+                        <h:outputText value="#{artigoSubmetido.tituloArtigo}"/>
+                    </p:column>
+                                 
+                    <p:column headerText="Data de artigo submetido">
+                        <h:outputText value="#{artigoSubmetido.dtArtigoSubmetido}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                                 
+                    <p:column headerText="Artigo submetido">
+                        <h:outputText escape="false" value="#{artigoSubmetido.linkDrive}"/>
+                    </p:column>
+                                 
+                    <p:column headerText="Parecer">
+                        
+<!--                        <h:form> 
+                        <p:growl id="growl" life="2000" />
+                            <p:commandButton value="Aprovar" 
+                                          id="aprovar" 
+                                          update="growl" 
+                                          action="#{artigoSubmetido.aprovarArtigo}" 
+                                          style="width: auto;" 
+                                          styleClass="ui-priority-primary" />
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Aprovar com Ressalva" 
+                                          id="aprovarRessalva" 
+                                          update="growl" 
+                                          action="#{artigoSubmetido.aprovarArtigoRessalva}" 
+                                          style="width: auto;" 
+                                          styleClass="ui-priority-primary" />
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Rejeitar" 
+                                          id="rejeitar" 
+                                          update="growl" 
+                                          action="#{artigoSubmetido.rejeitarArtigo}" 
+                                          style="width: auto;" 
+                                          styleClass="ui-priority-primary" />
+                    </h:form>-->
+                    <h:form id="formFormularioParecerFinal">
+                        <p:commandButton value="AVALIAR ARTIGO" 
+                                             type="button" 
+                                             onclick="PF('dialogParecerFinal').show();"
+                                             styleClass="ui-priority-primary"
+                                             />
+                        
+                        <p:dialog header="Parecer Final" 
+                                  widgetVar="dialogParecerFinal" 
+                                  modal="true"
+                                  height="auto">
+                            
+                            <h:outputText value="Resultado: "
+                                          style="font-weight: bold"/>
+                            <br/>
+                            <p:selectOneMenu converter="converterParecerFinal" 
+                                             value="#{artigoSubmetidoMB.artigoSubmetido.artigoSubmetidoAvaliado}"
+                                             style="width:290px">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{artigoSubmetidoMB.listaArtigoSubmetido}" 
+                                               var="artigoAvaliado" itemLabel="#{artigoAvaliado.artigoSubmetidoAvaliado}"
+                                               itemValue="#{artigoAvaliado}"/>
+                            </p:selectOneMenu>
+                            <br/> 
+                            <br/>
+                             <h:outputLabel value="Justificativa (se aprovado com ressalva ou rejeitado): "
+                                           style="font-weight: bold; display: block; width:400px"
+                                           escape="false"/> 
+                            
+                             <p:inputTextarea rows="5"
+                                              cols="30"
+                                              counter="dialogParecerFinal"
+                                              maxlength="100" 
+                                              counterTemplate="{0} caracteres restantes."
+                                              autoResize="false"
+                                              value="#{artigoSubmetidoMB.artigoSubmetido.justificativa}"
+                                              style="width:300px"/>
+                            <div align="left"><h:outputText id="dialogParecerFinal" /></div>
+                            <br/>
+                            <p:commandButton value="FINALIZAR AVALIAÇÃO" 
+                                             actionListener="#{artigoSubmetidoMB.inserir()}"
+                                             oncomplete="validarFormulario(xhr, status, args)"
+                                             update=":formTabelaArtigoSubmetido,@form"
+                                             style="width:310px; font-weight: bold"
+                                             styleClass="ui-priority-primary"/>
+                        </p:dialog>   
+                    </h:form>
+                    </p:column> 
+                   </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

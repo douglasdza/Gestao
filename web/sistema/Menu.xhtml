@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <nav class="aw-menu">
+        <ul>
+            <li>
+                <center><h:link><i class="fa  fa-fw  fa-home"></i>- MENU -</h:link></center>
+            </li>
+            <h:form>               
+                <p:menu toggleable="true">
+
+                    <p:submenu label="Página Inicial">
+                        <p:menuitem value="Ir na página inicial" url="../../sistema/principal/principal.xhtml" />
+                        
+                    </p:submenu>
+
+                    <p:submenu label="Cadastros">
+                        <p:menuitem value="Cadastar estados" url="../../sistema/cadastros/cadastro-estados.xhtml" />
+                        <p:menuitem value="Cadastar cidades" url="../../sistema/cadastros/cadastro-cidades.xhtml" />
+                    </p:submenu>
+                    
+                    <p:submenu label="Eventos">
+                        <p:menuitem value="Cadastar eventos" url="../../sistema/cadastros/cadastro-eventos.xhtml" />
+                        <p:menuitem value="Cadastar palestrantes" url="../../sistema/cadastros/cadastro-palestrantes2.xhtml" />
+                        <p:menuitem value="Gerenciar inscrições" url="../../sistema/inscricao/inscricao-alunosADM.xhtml" />
+                    </p:submenu>
+
+                    <p:submenu label="Cursos">
+                        <p:menuitem value="Cadastar cursos" url="../../sistema/cadastros/cadastro-cursos.xhtml" />
+                    </p:submenu>
+                    
+                    <p:submenu label="Artigos">
+                        <p:menuitem value="Submissão de Artigos" url="../../sistema/artigo/cadastro-artigos.xhtml" />
+                         <p:menuitem value="Avaliar Artigos" url="../../sistema/artigo/avaliar-artigos.xhtml" />
+                    </p:submenu>
+                    
+                    <p:submenu label="Usuários">
+                        <p:menuitem value="Usuários" url="../../sistema/cadastros/cadastro-usuarios.xhtml" />
+                    </p:submenu>
+
+                    <p:submenu label="Relatórios">
+                        <p:menuitem value="Lista de Relatórios" url="../../sistema/relatorios/relatorios.xhtml" />
+                    </p:submenu>
+
+                </p:menu>
+            </h:form>
+
+            <li class="is-selected"
+                styleClass="ui-priority-primary">
+                <h:outputLink value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+                    <h:outputText value="SAIR"/>
+                </h:outputLink>
+            </li>
+        </ul>
+    </nav>
+</ui:composition>
+
+
+<!--    Antigo código-->
+
+<!--		<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <nav class="aw-menu">
+        <ul>
+            <li>
+                <center><h:link><i class="fa  fa-fw  fa-home"></i>MENU</h:link></center>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/principal/principal.xhtml">Página Inicial</a>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/cadastros/cadastro-eventos.xhtml">Eventos</a>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/cadastros/cadastro-cursos.xhtml">Cursos</a>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/cadastros/cadastro-usuarios.xhtml">Usuários</a>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/inscricao/inscricao-alunos.xhtml">Gerenciar Inscrições</a>
+            </li>
+            <li class="is-selected">
+                <a class="fa  fa-fw  fa-file-text" href="../../sistema/cadastros/index.xhtml">Relatórios</a>
+            </li>
+
+        <h:form> 
+            <p:panelMenu style="auto">       
+                <p:submenu class="is-selected" label="Navigations" >            
+                    <p:menuitem value="Cadastar eventos" icon="ui-icon-signal" url="../../sistema/cadastros/cadastro-eventos.xhtml" />
+                </p:submenu>
+            </p:panelMenu>
+        </h:form>
+            
+            <li class="is-selected">
+            <h:outputLink value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+                <h:outputText value="Sair"/>
+            </h:outputLink>
+            </li>
+        </ul>
+    </nav>
+
+</ui:composition>-->

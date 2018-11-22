@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formBotaoNovoEstado">
+                    <p:commandButton value="CADASTRAR ESTADO" 
+                                     update=":formFormularioEstado"
+                                     oncomplete="PF('dialogEstado').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaEstado">
+                    <p:dataTable value="#{estadoMB.listaEstados}" 
+                                 var="estado">
+                        
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{estado.nome}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Sigla">
+                            <h:outputText value="#{estado.sigla}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar" 
+                                             oncomplete="PF('dialogEstado').show()" 
+                                             update=":formFormularioEstado" >
+                                <f:setPropertyActionListener value="#{estado}" 
+                                                             target="#{estadoMB.estado}"/>
+                            </p:commandButton> 
+
+                            <p:commandButton value="Excluir" 
+                                             update="@form" 
+                                             actionListener="#{estadoMB.remover(estado.id)}">
+                                <p:confirm header="Confirmação"
+                                           message="Tem certeza de excluir o Estado?"
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true"
+                                     showEffect="fade"
+                                     hideEffect="fade">
+                        
+                        <p:commandButton value="Sim"
+                                         type="button"
+                                         styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check" />
+                        
+                        <p:commandButton value="Não"
+                                         type="button"
+                                         styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+
+                </h:form>
+
+                <p:dialog header="Cadastrar Estados"
+                          widgetVar="dialogEstado"
+                          modal="true"
+                          height="auto">
+                    
+                    <h:form id="formFormularioEstado">
+                        <h:panelGrid columns="1">
+
+                            <h:outputLabel for="erroEstado" value="Nome"/>
+                            <p:inputText id="erroEstado"
+                                         value="#{estadoMB.estado.nome}"
+                                         required="true"
+                                         requiredMessage="Nome de estado obrigatório!"/>
+
+                            <h:outputLabel for="erroSigla" value="Sigla"/>
+                            <p:inputText id="erroSigla"
+                                         value="#{estadoMB.estado.sigla}"
+                                         required="true"
+                                         requiredMessage="Sigla obrigatório!"/>
+
+                            <p:commandButton value="Inserir estado" 
+                                             actionListener="#{estadoMB.inserir()}"
+                                             oncomplete="validarEstado(xhr, status, args)"
+                                             update=":formTabelaEstado,@form"
+                                             styleClass="ui-priority-primary"/>
+
+                            <p:message for="erroEstado"/>
+                            <p:message for="erroSigla"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog> 
+
+                <script>
+                    function validarEstado(xhr, status, args) {
+                        if (!args.validationFailed) {
+                            PF('dialogEstado').hide();
+                        }
+                    }
+                </script>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

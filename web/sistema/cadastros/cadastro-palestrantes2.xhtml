@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="content">
+                
+                <center><h3>Cadastro de Palestrantes</h3></center>
+                    <p>
+                        Você deve cadastrar palestrantes e seus dados que irão
+                        ministrar palestras aqui no Instituto Federal do Paraná.
+                    </p>
+
+                <h:form id="formBotaoNovoParticipante">
+                    <p:commandButton value="CADASTRAR PALESTRANTE" 
+                                     update=":formFormularioParticipante"
+                                     oncomplete="PF('dialogParticipante').show()"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+
+                <h:form id="formTabelaParticipante">
+                    <p:dataTable value="#{participanteMB.listaParticipantes}" var="participante">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{participante.nomeParticipante}"/>
+                        </p:column>     
+
+                        <p:column headerText="Nome de Instituição de Ensino Superior (IES)">
+                            <h:outputText value="#{participante.nomeInSuperior}"/>
+                        </p:column>     
+
+                        <p:column headerText="E-mail">
+                            <h:outputText value="#{participante.email}"/>
+                        </p:column>     
+
+                        <p:column headerText="CPF">
+                            <h:outputText value="#{participante.cpfParticipante}"/>
+                        </p:column>     
+
+                        <p:column headerText="Telefone">
+                            <h:outputText value="#{participante.telefoneParticipante}"/>
+                        </p:column>
+
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar"
+                                             oncomplete="PF('dialogParticipante').show()" 
+                                             update=":formFormularioParticipante" 
+                                             styleClass="ui-priority-primary">
+                                <f:setPropertyActionListener value="#{participante}" target="#{participanteMB.participante}"/>
+                            </p:commandButton>    
+                            <p:commandButton value="Excluir" 
+                                             update="@form" 
+                                             actionListener="#{participanteMB.remover(participante.id)}"
+                                             styleClass="ui-priority-primary">
+                                <p:confirm header="Confirmação" message="Deseja excluir o Participante?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>                        
+                    </p:dataTable>
+                    
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+
+                <p:dialog header="Cadastro de Participante"
+                          widgetVar="dialogParticipante"
+                          modal="true"
+                          height="auto">
+                    
+                    <h:form id="formFormularioParticipante">
+                        <h:panelGrid columns="1">
+
+                            <h:outputLabel for="erroPalestrante" value="Nome"/>
+                            <p:inputText id="erroPalestrante" value="#{participanteMB.participante.nomeParticipante}"/>
+
+                            <h:outputText value="Nome de Instituição de Ensino Superior"/>
+                            <p:inputText value="#{participanteMB.participante.nomeInSuperior}"/>
+
+                            <h:outputText value="E-mail"/>
+                            <p:inputText value="#{participanteMB.participante.email}"/>
+
+                            <h:outputLabel value="CPF"/>
+                            <p:inputMask title="CPF" id="telefoneParticipante" alt="nome"
+                                         value="#{participanteMB.participante.cpfParticipante}"
+                                         required="true"
+                                         requiredMessage="CPF obrigatório!"
+                                         mask="999.999.999-99" />
+
+                            <h:outputText value="Telefone"/>
+                            <p:inputMask value="#{participanteMB.participante.telefoneParticipante}"
+                                         required="true"
+                                         requiredMessage="Telefone obrigatório!"
+                                         mask="(99) 99999-9999"/>
+
+                            <p:commandButton value="Inserir" 
+                                             actionListener="#{participanteMB.inserir()}"
+                                             oncomplete="validarPalestrante(xhr, status, args)"
+                                             update=":formTabelaParticipante,@form"
+                                             styleClass="ui-priority-primary"/>
+                            
+                            <p:message for="erroPalestrante"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog> 
+                
+                <br />
+                <br />
+                <h:form>
+                    <p:commandButton value="GERAR LISTA DE PALESTRANTES"
+                                     actionListener="#{participanteMB.chamarRelatorioConexao()}" 
+                                     ajax="false"
+                                     styleClass="ui-priority-primary"
+                                     style="width:300px"/>
+                </h:form>
+                
+                <script>
+                    function validarPalestrante(xhr, status, args) {
+                        if (!args.validationFailed) {
+                            PF('dialogParticipante').hide();
+                        }
+                    }
+                </script>
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
