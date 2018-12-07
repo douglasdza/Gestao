@@ -268,7 +268,11 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-
+                        
+                        <p:column headerText="Curso">
+                            <h:outputText value="#{subevento.evento.curso}"/>
+                        </p:column>
+                        
                         <p:column headerText="Palestrante/Participante">
                             <h:outputText value="#{subevento.participante.nomeParticipante}"/>
                         </p:column>
@@ -339,6 +343,21 @@
                             <p:calendar pattern="dd/MM/yyyy" 
                                         mask="true"
                                         value="#{subEventoMB.subevento.dataSubEvento}"/>
+                            
+                            <h:outputText value="Curso: "
+                                          style="font-weight: bold"/>
+                            <p:selectOneMenu id="erroSelecionarCursoSUBEVENTO"
+                                             converter="converterCurso" 
+                                             value="#{subEventoMB.evento.curso}" 
+                                             required="true"
+                                             requiredMessage="Obrigatório selecionar curso!"
+                                             style="width:280px">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{cursoMB.listaCursos}" 
+                                               var="curso" itemLabel="#{curso.nomeCurso}"
+                                               itemValue="#{curso}"/>
+                            </p:selectOneMenu>
+
 
                             <h:outputText value="Palestrante: "/>
                             <p:selectOneMenu converter="converterPalestrante" 
@@ -363,6 +382,7 @@
 
                             <p:message for="erroSubEvento"/>
                             <p:message for="erroCHSubEvento"/>
+                            <p:message for="erroSelecionarCursoSUBEVENTO"/>
                         </h:panelGrid>
                     </h:form>
                 </p:dialog>

@@ -86,8 +86,10 @@
                             <p:inputText value="#{participanteMB.participante.email}"/>
 
                             <h:outputLabel value="CPF"/>
-                            <p:inputMask title="CPF" id="telefoneParticipante" alt="nome"
+                            <p:inputMask id="erroCPFPalestrante"
+                                         title="CPF" alt="nome"
                                          value="#{participanteMB.participante.cpfParticipante}"
+                                         validator="validarCPF"
                                          required="true"
                                          requiredMessage="CPF obrigatório!"
                                          mask="999.999.999-99" />
@@ -97,7 +99,7 @@
                                          required="true"
                                          requiredMessage="Telefone obrigatório!"
                                          mask="(99) 99999-9999"/>
-
+                            
                             <p:commandButton value="Inserir" 
                                              actionListener="#{participanteMB.inserir()}"
                                              oncomplete="validarPalestrante(xhr, status, args)"
@@ -105,6 +107,7 @@
                                              styleClass="ui-priority-primary"/>
                             
                             <p:message for="erroPalestrante"/>
+                            <p:message for="erroCPFPalestrante"/>
                         </h:panelGrid>
                     </h:form>
                 </p:dialog> 

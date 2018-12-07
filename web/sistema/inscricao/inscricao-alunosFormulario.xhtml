@@ -95,8 +95,7 @@
                     <h:form id="formFormularioInscricao">
                     <h:panelGrid columns="1">
                         
-                        <h:outputLabel for="erroNomeInscrito" 
-                                       value="Nome completo:"
+                        <h:outputLabel value="Nome completo:"
                                        style="font-weight: bold"/>
                         <p:inputText id="erroNomeInscrito"
                                      value="#{alunoMB.aluno.nomeCompleto}"
@@ -104,8 +103,7 @@
                                      requiredMessage="Nome de curso obrigatório!"
                                      style="width:300px"/>
                             
-                        <h:outputLabel for="erroDatadeNascimento" 
-                                       value="Data de Nascimento: "
+                        <h:outputLabel value="Data de Nascimento: "
                                        style="font-weight: bold"/>
                         <p:calendar id="erroDatadeNascimento"
                                     pattern="dd/MM/yyyy"
@@ -115,8 +113,7 @@
                                     requiredMessage="Obrigatório incluir data de nascimento"
                                     style="width:1000px"/>
                         
-                        <h:outputLabel for="erroCidadeResidencia"
-                                       value="Cidade de residência: "
+                        <h:outputLabel value="Cidade de residência: "
                                        style="font-weight: bold"/>
                             <p:selectOneMenu id="erroCidadeResidencia" 
                                              converter="converterCidade" 
@@ -132,8 +129,7 @@
                                                />
                             </p:selectOneMenu>
                         
-                            <h:outputLabel for="erroEstadoInscricao" 
-                                           value="Estado: "
+                            <h:outputLabel value="Estado: "
                                            style="font-weight: bold"/>
                             <p:selectOneMenu id="erroEstadoInscricao" 
                                              converter="converterEstado" 
@@ -149,21 +145,20 @@
                                                />
                             </p:selectOneMenu>
                             
-                            <h:outputLabel for="erroCPFInscricao"
-                                           value="CPF: "
+                            <h:outputLabel value="CPF: "
                                            style="font-weight: bold"/>
                             <p:inputMask title="CPF"
                                          id="erroCPFInscricao"
                                          alt="nome"
                                          value="#{alunoMB.aluno.cpf}"
+                                         validator="validarCPF"                                         
                                          required="true"
                                          requiredMessage="CPF obrigatório!"
                                          mask="999.999.999-99"
                                          style="width:300px"
-                                         validator="validarCPF"/>
+                                         />
                             
-                            <h:outputLabel for="erroFoneInscricao"
-                                           value="Telefone/Celular: "
+                            <h:outputLabel value="Telefone/Celular: "
                                            style="font-weight: bold"/>
                             <p:inputMask id="erroFoneInscricao"
                                          value="#{alunoMB.aluno.telefone}"
@@ -177,8 +172,7 @@
                         <p:inputText value="#{alunoMB.aluno.registroAcademico}"
                                      style="width:300px"/>
                         
-                            <h:outputLabel for="erroEmailInscricao"
-                                           value="E-mail (será utilizado como login): "
+                            <h:outputLabel value="E-mail (será utilizado como login): "
                                            style="font-weight: bold"/>
                             <p:inputText id="erroEmailInscricao"
                                          value="#{alunoMB.usuario.email}"
