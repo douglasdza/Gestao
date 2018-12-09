@@ -96,5 +96,4 @@ public class ParticipanteMB {
     public void setNomePalestrante(String nomePalestrante) {
         this.nomePalestrante = nomePalestrante;
     }
-    
 }

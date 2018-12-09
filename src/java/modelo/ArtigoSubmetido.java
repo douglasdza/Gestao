@@ -23,6 +23,9 @@ public class ArtigoSubmetido implements Serializable{
     
     @ManyToOne
     private SubmeterArtigo submeterArtigo;
+    
+    @ManyToOne
+    private Evento evento;
 
     public Long getId() {
         return id;
@@ -79,4 +82,12 @@ public class ArtigoSubmetido implements Serializable{
     public void setSubmeterArtigo(SubmeterArtigo submeterArtigo) {
         this.submeterArtigo = submeterArtigo;
     }  
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
 }

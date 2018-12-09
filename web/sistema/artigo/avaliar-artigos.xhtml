@@ -30,6 +30,10 @@
                         <h:outputText value="#{artigoSubmetido.tituloArtigo}"/>
                     </p:column>
                                  
+                    <p:column headerText="Evento">
+                        <h:outputText value="#{artigoSubmetido.evento.nomeEvento}"/>
+                    </p:column> 
+                        
                     <p:column headerText="Data de artigo submetido">
                         <h:outputText value="#{artigoSubmetido.dtArtigoSubmetido}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -97,14 +101,10 @@
                                            escape="false"/> 
                             
                              <p:inputTextarea rows="5"
-                                              cols="30"
-                                              counter="dialogParecerFinal"
-                                              maxlength="100" 
-                                              counterTemplate="{0} caracteres restantes."
+                                              cols="30"                                             
                                               autoResize="false"
                                               value="#{artigoSubmetidoMB.artigoSubmetido.justificativa}"
-                                              style="width:300px"/>
-                            <div align="left"><h:outputText id="dialogParecerFinal" /></div>
+                                              style="width:300px"/>                           
                             <br/>
                             <p:commandButton value="FINALIZAR AVALIAÇÃO" 
                                              actionListener="#{artigoSubmetidoMB.inserir()}"

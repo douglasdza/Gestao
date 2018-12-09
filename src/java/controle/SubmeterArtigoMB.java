@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import modelo.Evento;
 import modelo.SubmeterArtigo;
 
 @ManagedBean
@@ -15,6 +16,7 @@ public class SubmeterArtigoMB {
     private List<SubmeterArtigo> listaArtigos;
     private DAOGenerico<SubmeterArtigo> daoSubmeterArtigo;
     private ArtigoSubmetidoMB artigosubmetido;
+    private Evento evento;
 
     public SubmeterArtigoMB() {
         criarObjetos();
@@ -82,5 +84,21 @@ public class SubmeterArtigoMB {
 
     public void setArtigoSubmetidoMB(ArtigoSubmetidoMB artigoSubmetidoMB) {
         this.artigosubmetido = artigoSubmetidoMB;
+    }
+
+    public ArtigoSubmetidoMB getArtigosubmetido() {
+        return artigosubmetido;
+    }
+
+    public void setArtigosubmetido(ArtigoSubmetidoMB artigosubmetido) {
+        this.artigosubmetido = artigosubmetido;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 }

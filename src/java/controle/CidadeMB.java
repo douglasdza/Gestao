@@ -72,4 +72,12 @@ public class CidadeMB {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    public DAOGenerico<Cidade> getDaoCidade() {
+        return daoCidade;
+    }
+
+    public void setDaoCidade(DAOGenerico<Cidade> daoCidade) {
+        this.daoCidade = daoCidade;
+    }
 }

@@ -40,7 +40,7 @@
                         <p:column headerText="Título de Artigo">
                             <h:outputText value="#{artigo.tituloArtigo}"/>
                         </p:column>
-
+                        
                         <p:column headerText="Autor">
                             <h:outputText value="#{artigo.autor}"/>
                         </p:column>
@@ -53,6 +53,10 @@
                             <h:outputText value="#{artigo.orientador}"/>
                         </p:column>
 
+                        <p:column headerText="Evento">
+                            <h:outputText value="#{artigo.evento.nomeEvento}"/>
+                        </p:column>
+                        
                         <p:column headerText="Data de Submissão de Artigo">
                             <h:outputText value="#{artigo.dtArtigoSubmetido}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -157,7 +161,15 @@
                                          required="true"
                                          requiredMessage="Orientador obrigatório!"
                                          style="width:300px"/>
-
+                            
+                            <h:outputText value="Evento: "/>
+                            <p:selectOneMenu converter="converterEvento" 
+                                             value="#{submeterArtigoMB.submeterartigo.evento}" >
+                                <f:selectItems value="#{eventoMB.listaEventos}" 
+                                               var="evento" itemLabel="#{evento.nomeEvento}"
+                                               itemValue="#{evento}"/>
+                            </p:selectOneMenu>
+                            
                             <h:outputLabel for="errodtSubmissaoArtigo"
                                            style="font-weight: bold; display: block;" 
                                            escape="false" 
