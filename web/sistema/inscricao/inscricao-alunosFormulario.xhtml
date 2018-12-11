@@ -17,8 +17,8 @@
                     <p><font color="red" style="font-weight: bold">Atenção:</font> ao cadastrar login e senha, 
                         você deverá digitar exatamente a seguinte palavra: "COMUM" (sem aspas) para definir seu nível de acesso ao sistema.</p>
                 </p>
-                
-                 <h:form id="formBotaoInscricao">
+
+                <h:form id="formBotaoInscricao">
                     <p:commandButton value="REALIZAR INSCRIÇÃO"
                                      update=":formFormularioInscricao"
                                      oncomplete="PF('dialogInscricao').show()"
@@ -31,48 +31,48 @@
                     <p:dataTable value="#{alunoMB.listaAlunos}"
                                  var="aluno">
 
-                    <p:column headerText="Nome completo">
-                        <h:outputText value="#{aluno.nomeCompleto}"/>
-                    </p:column>
+                        <p:column headerText="Nome completo">
+                            <h:outputText value="#{aluno.nomeCompleto}"/>
+                        </p:column>
 
-                    <p:column headerText="Data de Nascimento">
-                        <h:outputText value="#{aluno.dataNascimento}">
-                             <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                                 
-                    <p:column headerText="Cidade de residência">
-                        <h:outputText value="#{aluno.cidade.nome}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{aluno.estado.nome}"/>
-                    </p:column>
-                         
-                    <p:column headerText="CPF">
-                        <h:outputText value="#{aluno.cpf}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{aluno.telefone}"/>
-                    </p:column>
-                    
-                    <p:column headerText="E-mail">
-                        <h:outputText value="#{aluno.email}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Registro Acadêmico (RA)">
-                        <h:outputText value="#{aluno.registroAcademico}"/>
-                    </p:column>
-                         
-                    <p:column headerText="Ações">
-                        <p:commandButton value="Alterar"
-                                         oncomplete="PF('dialogInscricao').show()"
-                                         update="formFormularioInscricao"
-                                         styleClass="ui-priority-primary">
-                            <f:setPropertyActionListener value="#{aluno}" 
-                                                         target="#{alunoMB.aluno}"/>
-                        </p:commandButton>
+                        <p:column headerText="Data de Nascimento">
+                            <h:outputText value="#{aluno.dataNascimento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Cidade de residência">
+                            <h:outputText value="#{aluno.cidade.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{aluno.estado.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="CPF">
+                            <h:outputText value="#{aluno.cpf}"/>
+                        </p:column>
+
+                        <p:column headerText="Telefone">
+                            <h:outputText value="#{aluno.telefone}"/>
+                        </p:column>
+
+                        <p:column headerText="E-mail">
+                            <h:outputText value="#{aluno.email}"/>
+                        </p:column>
+
+                        <p:column headerText="Registro Acadêmico (RA)">
+                            <h:outputText value="#{aluno.registroAcademico}"/>
+                        </p:column>
+
+                        <p:column headerText="Ações">
+                            <p:commandButton value="Alterar"
+                                             oncomplete="PF('dialogInscricao').show()"
+                                             update=":formFormularioInscricao"
+                                             styleClass="ui-priority-primary">
+                                <f:setPropertyActionListener value="#{aluno}" 
+                                                             target="#{alunoMB.aluno}"/>
+                            </p:commandButton>
                             <p:commandButton value="Excluir" 
                                              update="@form" 
                                              actionListener="#{alunoMB.remover(aluno.id)}"
@@ -80,55 +80,57 @@
                                 <p:confirm header="Confirmação" message="Deseja excluir esta inscrição?" icon="ui-icon-alert" />
                             </p:commandButton>                    
                         </p:column>             
-                         
-                   </p:dataTable>
-                    
+
+                    </p:dataTable>
+
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                         <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                     </p:confirmDialog>
                 </h:form>
-                
+
                 <p:dialog header="Realizar inscrição" 
-                          widgetVar="dialogInscricao" modal="true" height="500">
-                
+                          widgetVar="dialogInscricao" 
+                          modal="true" 
+                          height="500">
+
                     <h:form id="formFormularioInscricao">
-                    <h:panelGrid columns="1">
-                        
-                        <h:outputLabel value="Nome completo:"
-                                       style="font-weight: bold"/>
-                        <p:inputText id="erroNomeInscrito"
-                                     value="#{alunoMB.aluno.nomeCompleto}"
-                                     required="true"
-                                     requiredMessage="Nome de curso obrigatório!"
-                                     style="width:300px"/>
-                            
-                        <h:outputLabel value="Data de Nascimento: "
-                                       style="font-weight: bold"/>
-                        <p:calendar id="erroDatadeNascimento"
-                                    pattern="dd/MM/yyyy"
-                                    mask="true"
-                                    value="#{alunoMB.aluno.dataNascimento}"
-                                    required="true"
-                                    requiredMessage="Obrigatório incluir data de nascimento"
-                                    style="width:1000px"/>
-                        
-                        <h:outputLabel value="Cidade de residência: "
-                                       style="font-weight: bold"/>
+                        <h:panelGrid columns="1">
+
+                            <h:outputLabel value="Nome completo:"
+                                           style="font-weight: bold"/>
+                            <p:inputText id="erroNomeInscrito"
+                                         value="#{alunoMB.aluno.nomeCompleto}"
+                                         required="true"
+                                         requiredMessage="Nome de curso obrigatório!"
+                                         style="width:300px"/>
+
+                            <h:outputLabel value="Data de Nascimento: "
+                                           style="font-weight: bold"/>
+                            <p:calendar id="erroDatadeNascimento"
+                                        pattern="dd/MM/yyyy"
+                                        mask="true"
+                                        value="#{alunoMB.aluno.dataNascimento}"
+                                        required="true"
+                                        requiredMessage="Obrigatório incluir data de nascimento"
+                                        style="width:1000px"/>
+
+                            <h:outputLabel value="Cidade de residência: "
+                                           style="font-weight: bold"/>
                             <p:selectOneMenu id="erroCidadeResidencia" 
                                              converter="converterCidade" 
                                              value="#{alunoMB.aluno.cidade}"
                                              required="true"
                                              requiredMessage="Obrigatório selecionar cidade!"
                                              style="width:300px">
-                                 <f:selectItem itemLabel="Selecione..." itemValue="" />
-                                 <f:selectItems value="#{cidadeMB.listaCidades}" 
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItems value="#{cidadeMB.listaCidades}" 
                                                var="cidade" 
                                                itemLabel="#{cidade.nome}"
                                                itemValue="#{cidade}"
                                                />
                             </p:selectOneMenu>
-                        
+
                             <h:outputLabel value="Estado: "
                                            style="font-weight: bold"/>
                             <p:selectOneMenu id="erroEstadoInscricao" 
@@ -137,14 +139,14 @@
                                              required="true"
                                              requiredMessage="Obrigatório selecionar estado!"
                                              style="width:300px">
-                                 <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
                                 <f:selectItems value="#{estadoMB.listaEstados}" 
                                                var="estado" 
                                                itemLabel="#{estado.nome}"
                                                itemValue="#{estado}"
                                                />
                             </p:selectOneMenu>
-                            
+
                             <h:outputLabel value="CPF: "
                                            style="font-weight: bold"/>
                             <p:inputMask title="CPF"
@@ -157,7 +159,7 @@
                                          mask="999.999.999-99"
                                          style="width:300px"
                                          />
-                            
+
                             <h:outputLabel value="Telefone/Celular: "
                                            style="font-weight: bold"/>
                             <p:inputMask id="erroFoneInscricao"
@@ -166,45 +168,45 @@
                                          requiredMessage="Telefone obrigatório!"
                                          mask="(99) 99999-9999"
                                          style="width:300px"/>
-                            
-                        <h:outputLabel value="Registro Acadêmico (se for aluno do IFPR): "
-                                       style="font-weight: bold"/>
-                        <p:inputText value="#{alunoMB.aluno.registroAcademico}"
-                                     style="width:300px"/>
-                        
+
+                            <h:outputLabel value="Registro Acadêmico (se for aluno do IFPR): "
+                                           style="font-weight: bold"/>
+                            <p:inputText value="#{alunoMB.aluno.registroAcademico}"
+                                         style="width:300px"/>
+
                             <h:outputLabel value="E-mail (será utilizado como login): "
                                            style="font-weight: bold"/>
                             <p:inputText id="erroEmailInscricao"
                                          value="#{alunoMB.usuario.email}"
                                          validator="validarEmail"
                                          style="width:300px"/>
-                        
-                        <h:outputLabel value="Senha: "
-                                       style="font-weight: bold"/>
-                        <p:inputText value="#{alunoMBa.usuario.senha}"
-                                     style="width:300px"/>
-                        
-                        <h:outputLabel value="Nível de Acesso (digite COMUM): "
-                                       style="font-weight: bold"/>
-                        <p:inputText value="#{alunoMB.usuario.perfil}"
-                                     style="width:300px"/>
-                        
-                        <p:commandButton value="Finalizar inscrição"
-                                         actionListener="#{alunoMB.inserir()}"
-                                         oncomplete="validarInscricao(xhr, status, args)"
-                                         update=":formFormularioInscricao,@form"
-                                         style="width:310px; font-weight: bold"
-                                         styleClass="ui-priority-primary"/>
-                            
-                    <p:message for="erroNomeInscrito"/>
-                    <p:message for="erroDatadeNascimento"/>
-                    <p:message for="erroCidadeResidencia"/>
-                    <p:message for="erroEstadoInscricao"/>
-                    <p:message for="erroCPFInscricao"/>   
-                    <p:message for="erroFoneInscricao"/>
-                    <p:message for="erroEmailInscricao"/>
-                    </h:panelGrid>
-                </h:form>
+
+                            <h:outputLabel value="Senha: "
+                                           style="font-weight: bold"/>
+                            <p:inputText value="#{alunoMB.usuario.senha}"
+                                         style="width:300px"/>
+
+                            <h:outputLabel value="Nível de Acesso (digite COMUM): "
+                                           style="font-weight: bold"/>
+                            <p:inputText value="#{alunoMB.usuario.perfil}"
+                                         style="width:300px"/>
+
+                            <p:commandButton value="Finalizar inscrição"
+                                             actionListener="#{alunoMB.inserir()}"
+                                             oncomplete="validarInscricao(xhr, status, args)"
+                                             update=":formTabelaInscricao,@form"
+                                             style="width:310px; font-weight: bold"
+                                             styleClass="ui-priority-primary"/>
+
+                            <p:message for="erroNomeInscrito"/>
+                            <p:message for="erroDatadeNascimento"/>
+                            <p:message for="erroCidadeResidencia"/>
+                            <p:message for="erroEstadoInscricao"/>
+                            <p:message for="erroCPFInscricao"/>   
+                            <p:message for="erroFoneInscricao"/>
+                            <p:message for="erroEmailInscricao"/>
+                        </h:panelGrid>
+                    </h:form>
                 </p:dialog>
                 <script>
                     function validarInscricao(xhr, status, args) {

@@ -10,20 +10,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="artigo_submetido")
-public class ArtigoSubmetido implements Serializable{
+@Table(name="resultado_artigo")
+public class ResultadoArtigo implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     
-    private String artigoSubmetidoAvaliado;
-    private String justificativa;
+    private Long id;
+    private String resultadoArtigo;
     
     @ManyToOne
     private SubmeterArtigo submeterArtigo;
     
     @ManyToOne
-    private Evento evento;
+    private ArtigoSubmetido artigoSubmetido;
 
     public Long getId() {
         return id;
@@ -33,20 +34,12 @@ public class ArtigoSubmetido implements Serializable{
         this.id = id;
     }
 
-    public String getArtigoSubmetidoAvaliado() {
-        return artigoSubmetidoAvaliado;
+    public String getResultadoArtigo() {
+        return resultadoArtigo;
     }
 
-    public void setArtigoSubmetidoAvaliado(String artigoSubmetidoAvaliado) {
-        this.artigoSubmetidoAvaliado = artigoSubmetidoAvaliado;
-    }
-
-    public String getJustificativa() {
-        return justificativa;
-    }
-
-    public void setJustificativa(String justificativa) {
-        this.justificativa = justificativa;
+    public void setResultadoArtigo(String resultadoArtigo) {
+        this.resultadoArtigo = resultadoArtigo;
     }
 
     public SubmeterArtigo getSubmeterArtigo() {
@@ -57,18 +50,18 @@ public class ArtigoSubmetido implements Serializable{
         this.submeterArtigo = submeterArtigo;
     }
 
-    public Evento getEvento() {
-        return evento;
+    public ArtigoSubmetido getArtigoSubmetido() {
+        return artigoSubmetido;
     }
 
-    public void setEvento(Evento evento) {
-        this.evento = evento;
+    public void setArtigoSubmetido(ArtigoSubmetido artigoSubmetido) {
+        this.artigoSubmetido = artigoSubmetido;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -83,7 +76,7 @@ public class ArtigoSubmetido implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ArtigoSubmetido other = (ArtigoSubmetido) obj;
+        final ResultadoArtigo other = (ResultadoArtigo) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

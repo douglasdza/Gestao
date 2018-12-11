@@ -261,23 +261,23 @@
                 </p>
                 <br/>
                 <h:form id="formTabelaResultadoParecer">
-                    <p:dataTable value="#{submeterArtigoMB.listaArtigos}"
-                                 var="artigoAvaliado">
+                    <p:dataTable value="#{artigoSubmetidoMB.listaArtigoSubmetido}"
+                                 var="resultadoArtigo">
                         
-                    <p:column headerText="Autor">
-                        <h:outputText value="#{artigoAvaliado.autor}"/>
-                    </p:column>
+<!--                    <p:column headerText="Autor">
+                        <h:outputText value="#{artigoAvaliado.submeterArtigo.autor}"/>
+                    </p:column>-->
                         
                     <p:column headerText="Artigo">
-                        <h:outputText value="#{artigoAvaliado.tituloArtigo}"/>
+                        <h:outputText value="#{artigoSubmetidoMB.submeterArtigo.tituloArtigo}"/>
                     </p:column>
                         
                     <p:column headerText="Avaliação Final">
-                        <h:outputText value="#{artigoAvaliado.artigoSubmetido.artigoSubmetidoAvaliado}"/>
+                        <h:outputText value="#{resultadoArtigo.artigoSubmetidoAvaliado}"/>
                     </p:column>
                         
                     <p:column headerText="Justificativa">
-                        <h:outputText value="#{artigoAvaliado.artigoSubmetido.justificativa}"/>
+                        <h:outputText value="#{resultadoArtigo.justificativa}"/>
                     </p:column>
                     </p:dataTable>
                 </h:form>                

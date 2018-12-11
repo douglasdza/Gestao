@@ -86,13 +86,22 @@
                             <h:outputText value="Resultado: "
                                           style="font-weight: bold"/>
                             <br/>
-                            <p:selectOneMenu converter="converterParecerFinal" 
+<!--                            <p:selectOneMenu converter="converterParecerFinal" 
                                              value="#{artigoSubmetidoMB.artigoSubmetido.artigoSubmetidoAvaliado}"
                                              style="width:290px">
                                 <f:selectItem itemLabel="Selecione..." itemValue="" />
                                 <f:selectItems value="#{artigoSubmetidoMB.listaArtigoSubmetido}" 
                                                var="artigoAvaliado" itemLabel="#{artigoAvaliado.artigoSubmetidoAvaliado}"
                                                itemValue="#{artigoAvaliado}"/>
+                            </p:selectOneMenu>-->
+                            
+                            <p:selectOneMenu id="artigoSubmetidoAvaliado" 
+                                             value="#{artigoSubmetidoMB.artigoSubmetido.artigoSubmetidoAvaliado}" 
+                                             style="width:125px">
+                                <f:selectItem itemLabel="Selecione..." itemValue="" />
+                                <f:selectItem itemLabel="AROVADO" itemValue="AROVADO" />
+                                <f:selectItem itemLabel="APROVADO COM RESSALVA" itemValue="APROVADO COM RESSALVA" />
+                                <f:selectItem itemLabel="REJEITADO" itemValue="REJEITADO" />
                             </p:selectOneMenu>
                             <br/> 
                             <br/>
